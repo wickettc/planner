@@ -1,6 +1,9 @@
 <template>
     <div class="calendar-container">
-        <div class="calendar-selectors">
+        <button class="calendar-show-btn" @click="showCalendar = !showCalendar">
+            {{ showCalendar ? 'Hide' : 'Show Calendar' }}
+        </button>
+        <div v-if="showCalendar" class="calendar-selectors">
             <select v-model="year" id="select-year">
                 <option v-for="n in yearArr" :key="n" :value="n">{{
                     n
@@ -20,8 +23,11 @@
                 <option value="10">November</option>
                 <option value="11">December</option>
             </select>
+            <div>
+                {{ selectedDate ? selectedDate.getDate() : '' }}
+            </div>
         </div>
-        <div id="calendar">
+        <div v-if="showCalendar" id="calendar">
             <table>
                 <thead>
                     <tr>
@@ -52,12 +58,13 @@ export default {
     data() {
         return {
             yearArr: [],
-            tbHeader: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
+            tbHeader: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
             tbData: [],
             year: undefined,
             month: undefined,
             highlightedDay: undefined,
             selectedDate: undefined,
+            showCalendar: true,
         };
     },
     created() {
@@ -111,6 +118,8 @@ export default {
                         cellCount++;
                     }
                 } else {
+                    let today = new Date();
+                    this.selectedDate = today;
                     keepLoop = false;
                 }
             }
@@ -124,11 +133,7 @@ export default {
             }
             e.target.classList.add('highlight');
             this.highlightedDay = e.target;
-            let date = new Date(
-                this.year,
-                this.month,
-                e.target.innerHTML
-            ).toLocaleDateString();
+            let date = new Date(this.year, this.month, e.target.innerHTML);
             this.selectedDate = date;
         },
     },
@@ -143,10 +148,19 @@ export default {
     font-size: 1.2rem;
 }
 
+.calendar-show-btn {
+    width: 100%;
+}
+
 .calendar-selectors {
     display: flex;
     justify-content: space-evenly;
     width: 100%;
+    padding: 2px;
+}
+
+select {
+    border: none;
 }
 
 .clickable {
