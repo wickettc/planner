@@ -1,14 +1,6 @@
 <template>
     <div class="calendar-container">
-        <button class="calendar-show-btn" @click="showCalendar = !showCalendar">
-            {{ showCalendar ? 'Hide' : 'Show Calendar' }}
-        </button>
-        <div v-if="showCalendar" class="calendar-selectors">
-            <select v-model="year" id="select-year">
-                <option v-for="n in yearArr" :key="n" :value="n">{{
-                    n
-                }}</option>
-            </select>
+        <div class="calendar-selectors">
             <select v-model="month" id="select-month">
                 <option value="0">January</option>
                 <option value="1">February</option>
@@ -26,8 +18,13 @@
             <div>
                 {{ selectedDate ? selectedDate.getDate() : '' }}
             </div>
+            <select v-model="year" id="select-year">
+                <option v-for="n in yearArr" :key="n" :value="n">{{
+                    n
+                }}</option>
+            </select>
         </div>
-        <div v-if="showCalendar" id="calendar">
+        <div class="calendar">
             <table>
                 <thead>
                     <tr>
@@ -37,14 +34,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(arr, ind) in tbData" :key="ind">
+                    <tr v-for="(weekArr, ind) in tbData" :key="ind">
                         <td
-                            v-on="arr[i] ? { click: handleHighlight } : {}"
-                            :class="arr[i] && 'clickable'"
-                            v-for="(d, i) in arr"
+                            v-on="weekArr[i] ? { click: handleHighlight } : {}"
+                            :class="[
+                                // sets all days (with numbers) to be clickable
+                                weekArr[i] && 'clickable',
+                                // compares today to the iterable date to set today
+                                today.toLocaleDateString() ===
+                                new Date(
+                                    year,
+                                    month,
+                                    weekArr[i]
+                                ).toLocaleDateString()
+                                    ? 'today'
+                                    : '',
+                            ]"
+                            v-for="(day, i) in weekArr"
                             :key="i"
                         >
-                            {{ arr[i] }}
+                            {{ weekArr[i] }}
                         </td>
                     </tr>
                 </tbody>
@@ -55,6 +64,7 @@
 
 <script>
 export default {
+    name: 'Calendar',
     data() {
         return {
             yearArr: [],
@@ -64,13 +74,14 @@ export default {
             month: undefined,
             highlightedDay: undefined,
             selectedDate: undefined,
-            showCalendar: true,
+            today: new Date(),
         };
     },
     created() {
         let today = new Date();
         this.year = today.getFullYear();
         this.month = today.getMonth();
+        // lists out year range for select dropdown
         for (let i = 1990; i < 2100; i++) {
             this.yearArr.push(i);
         }
@@ -84,6 +95,9 @@ export default {
             this.clearCalendar();
             this.createCalendar();
         },
+        selectedDate: function() {
+            this.$emit('selected-date', this.selectedDate.toLocaleDateString());
+        },
     },
     methods: {
         createCalendar() {
@@ -96,10 +110,12 @@ export default {
             while (keepLoop) {
                 let date = new Date(this.year, this.month, dayCount);
                 if (date.getMonth() === curMonth) {
+                    // start new array for each "week"
                     if (cellCount === 0) {
                         this.tbData.push([]);
                         tbArrCount++;
                     }
+                    // add blank spaces to begining if week does not start on sun
                     if (startCal && date.getDay() !== 0) {
                         let addSpaces = date.getDay();
                         for (let i = 0; i < addSpaces; i++) {
@@ -110,22 +126,30 @@ export default {
                     } else {
                         startCal = false;
                     }
+                    // pushes "days" to tbData array
                     this.tbData[tbArrCount - 1].push(date.getDate());
                     dayCount++;
+                    // starts new array (week) once we hit a len of 7
                     if (cellCount === 6) {
                         cellCount = 0;
                     } else {
                         cellCount++;
                     }
+                    // ends this month
                 } else {
-                    let today = new Date();
-                    this.selectedDate = today;
+                    // only sets today as selected date on init
+                    if (!this.selectedDate) {
+                        this.selectedDate = this.today;
+                    }
                     keepLoop = false;
                 }
             }
         },
         clearCalendar() {
             this.tbData = [];
+            if (this.highlightedDay) {
+                this.highlightedDay.classList.remove('highlight');
+            }
         },
         handleHighlight(e) {
             if (this.highlightedDay) {
@@ -143,9 +167,8 @@ export default {
 <style scoped>
 .calendar-container {
     display: inline-block;
-    border: 1px solid black;
-    padding: 10px 5px;
     font-size: 1.2rem;
+    height: 100%;
 }
 
 .calendar-show-btn {
@@ -153,10 +176,32 @@ export default {
 }
 
 .calendar-selectors {
+    box-sizing: border-box;
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     width: 100%;
     padding: 2px;
+    height: 15%;
+    font-size: 1.5rem;
+    border-bottom: 1px solid gray;
+}
+
+.calendar-selectors select {
+    font-size: 1.4rem;
+}
+
+.calendar {
+    box-sizing: border-box;
+    width: 100%;
+    height: 85%;
+}
+
+.calendar table {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    table-layout: fixed;
 }
 
 select {
@@ -169,6 +214,11 @@ select {
 
 .highlight {
     background-color: black;
+    color: white;
+}
+
+.today {
+    background-color: gray;
     color: white;
 }
 
