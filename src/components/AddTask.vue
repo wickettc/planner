@@ -1,12 +1,12 @@
 <template>
-    <div class="addtodo-container">
+    <div class="add-task-container">
         <form @submit.prevent="onSubmit">
-            <h3>Add To-do</h3>
+            <h3>Add Task</h3>
             <input
                 v-model="subject"
                 type="text"
                 name="subject"
-                placeholder="What is the to-do?"
+                placeholder="What is the task?"
             />
             <div class="error sub-err">{{ subErr }}</div>
             <select v-model="importance" name="importance">
@@ -46,7 +46,7 @@
 import uniqid from 'uniqid';
 
 export default {
-    name: 'AddToDo',
+    name: 'AddTask',
     data() {
         return {
             times: [],
@@ -111,7 +111,7 @@ export default {
 h3 {
     margin: 10px 0;
 }
-.addtodo-container {
+.add-task-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -134,12 +134,21 @@ textarea,
 select {
     padding: 8px 10px;
     text-align: center;
+    background: #c2f261;
+    border: 1px solid white;
+    font-size: 1.1rem;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    border-radius: 5%;
 }
 
 select {
     text-align-last: center;
     -moz-text-align-last: center;
 }
+
+/* select option[value=''] {
+    color: gray;
+} */
 
 select option[value='very-important'] {
     background: red;
@@ -151,5 +160,24 @@ select option[value='important'] {
 
 select option[value='not-important'] {
     background: yellow;
+}
+
+button {
+    background: #c2f261;
+    border: 1px solid white;
+    border-radius: 5%;
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+    background: #d6f695;
+    transform: scale(1.05);
+    border: 1px solid black;
+}
+
+@media only screen and (max-width: 767px) {
+    .add-task-container {
+        padding: 15px 0;
+    }
 }
 </style>

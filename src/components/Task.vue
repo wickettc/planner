@@ -8,7 +8,7 @@
                 {{ !showNote ? 'Show Note' : 'Close Note' }}
             </button>
         </div>
-        <div v-if="showNote" class="task-note">
+        <div v-if="showNote" :class="['task-note', task.importance]">
             {{ task.notes }}
             <div v-if="!task.notes">Sorry, no notes</div>
         </div>
@@ -33,6 +33,9 @@ export default {
 .task-container {
     width: 95%;
     margin-bottom: 5px;
+    color: black;
+    border: 1px solid gray;
+    background: #30f2f2;
 }
 
 .task {
@@ -45,7 +48,7 @@ export default {
 }
 
 .task h3 {
-    width: 45%;
+    width: 35%;
     word-break: break-all;
 }
 
@@ -56,19 +59,32 @@ export default {
 
 .task-note {
     word-break: break-all;
-    border: 1px solid black;
     border-top: none;
+    padding: 5px 10px;
 }
 
 .very-important {
-    background-color: red;
+    border-left: 15px solid red;
 }
 
 .important {
-    background-color: orange;
+    border-left: 15px solid orange;
 }
 
 .not-important {
-    background-color: yellow;
+    border-left: 15px solid yellow;
+}
+
+button {
+    background: #77f6f6;
+    border: 1px solid white;
+    transition: all 0.3s ease-in-out;
+    border-radius: 5%;
+}
+
+button:hover {
+    background: #30f2f2;
+    border: 1px solid black;
+    transform: scale(1.05);
 }
 </style>

@@ -15,7 +15,7 @@
                 <option value="10">November</option>
                 <option value="11">December</option>
             </select>
-            <div>
+            <div class="selcted-date-div">
                 {{ selectedDate ? selectedDate.getDate() : '' }}
             </div>
             <select v-model="year" id="select-year">
@@ -185,6 +185,7 @@ export default {
     height: 15%;
     font-size: 1.5rem;
     border-bottom: 1px solid gray;
+    background: #91f291;
 }
 
 .calendar-selectors select {
@@ -202,6 +203,7 @@ export default {
     height: 100%;
     box-sizing: border-box;
     table-layout: fixed;
+    border-spacing: 0;
 }
 
 select {
@@ -212,17 +214,35 @@ select {
     cursor: pointer;
 }
 
-.highlight {
-    background-color: black;
-    color: white;
+.today {
+    background-color: #91f291;
+    color: black;
+    box-sizing: border-box;
 }
 
-.today {
-    background-color: gray;
+.highlight {
+    background-color: rgb(143, 140, 140);
     color: white;
+    box-sizing: border-box;
 }
 
 td {
     text-align: center;
+    box-sizing: border-box;
+}
+
+select,
+.selcted-date-div {
+    background: #91f291;
+    border: 1px solid white;
+    padding: 8px 10px;
+    color: black;
+    border-radius: 5%;
+}
+
+@media only screen and (max-width: 767px) {
+    td {
+        padding: 8px 0;
+    }
 }
 </style>

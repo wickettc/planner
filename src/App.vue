@@ -21,16 +21,35 @@ body {
     color: #2c3e50;
 }
 
-#nav {
-    padding: 30px;
+button {
+    padding: 6px 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
 }
 
-#nav a {
-    font-weight: bold;
-    color: #2c3e50;
+select {
+    cursor: pointer;
 }
 
-#nav a.router-link-exact-active {
-    color: #42b983;
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(110, 109, 109, 0.507);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #f6f677;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #f2f230;
+}
+
+@media only screen and (max-width: 500px) {
+    html {
+        font-size: 14px !important;
+    }
 }
 </style>
