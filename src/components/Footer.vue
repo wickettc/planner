@@ -34,6 +34,7 @@ export default {
 footer {
     position: relative;
     font-style: italic;
+    font-weight: 600;
     width: 100%;
     display: flex;
     justify-content: center;
