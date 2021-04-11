@@ -4,7 +4,12 @@
         <a href="https://www.chasewickett.com/" target="__blank"
             >Chase Wickett</a
         >
-        <a href="https://github.com/wickettc" target="__blank" class="git-icon">
+        <a
+            href="https://github.com/wickettc"
+            target="__blank"
+            class="git-icon"
+            aria-label="chase wickett github account link"
+        >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -29,7 +34,6 @@ export default {
 footer {
     position: relative;
     font-style: italic;
-    /* bottom: 0; */
     width: 100%;
     display: flex;
     justify-content: center;
@@ -37,7 +41,6 @@ footer {
     background-color: lightgray;
     padding: 5px 0;
     box-sizing: border-box;
-    /* border-right: 3px solid white; */
     height: 5%;
 }
 
@@ -48,5 +51,11 @@ a {
 
 .git-icon {
     margin-left: 5px;
+}
+
+@media only screen and (max-width: 767px) {
+    footer {
+        box-sizing: content-box;
+    }
 }
 </style>

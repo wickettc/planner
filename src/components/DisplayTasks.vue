@@ -113,10 +113,9 @@ h2 {
 }
 
 @media only screen and (max-width: 767px) {
-    .show-calendar-btn {
-        display: block;
-    }
+    .show-calendar-btn,
     .show-addtask-btn {
+        margin: 5px;
         display: block;
     }
 }

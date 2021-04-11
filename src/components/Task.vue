@@ -49,7 +49,7 @@ export default {
 
 .task h3 {
     width: 35%;
-    word-break: break-all;
+    overflow-wrap: break-word;
 }
 
 .task-time {
@@ -58,7 +58,7 @@ export default {
 }
 
 .task-note {
-    word-break: break-all;
+    overflow-wrap: break-word;
     border-top: none;
     padding: 5px 10px;
 }
