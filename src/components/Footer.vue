@@ -33,6 +33,10 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: lightgray;
+    padding: 5px 0;
+    box-sizing: border-box;
+    border-right: 3px solid black;
 }
 
 a {

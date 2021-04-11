@@ -140,4 +140,16 @@ select {
     text-align-last: center;
     -moz-text-align-last: center;
 }
+
+select option[value='very-important'] {
+    background: red;
+}
+
+select option[value='important'] {
+    background: orange;
+}
+
+select option[value='not-important'] {
+    background: yellow;
+}
 </style>
