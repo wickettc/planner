@@ -53,10 +53,4 @@ a {
 .git-icon {
     margin-left: 5px;
 }
-
-@media only screen and (max-width: 767px) {
-    footer {
-        box-sizing: content-box;
-    }
-}
 </style>
