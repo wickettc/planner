@@ -33,7 +33,10 @@
                 v-for="task in todaysTasks"
                 :key="task.id"
             >
-                <Task :task="task" />
+                <Task
+                    @ask-delete-task="$emit('ask-delete-task', task)"
+                    :task="task"
+                />
             </div>
             <div class="no-task-div" v-if="todaysTasks.length === 0">
                 No tasks to display yet, let's either add a task or select a
@@ -66,6 +69,7 @@ export default {
             this.$emit('addtask-clicked');
         },
     },
+    emits: ['ask-delete-task', 'cal-clicked', 'addtask-clicked'],
 };
 </script>
 

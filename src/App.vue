@@ -5,15 +5,22 @@
             :class="['v-calendar', showCalendar ? 'show-calendar' : '']"
         />
         <AddTask
-            @add-todo="addTodo"
-            :class="['v-addtodo', showAddTask ? 'show-add-task' : '']"
+            @add-task="addTask"
+            :class="['v-addtask', showAddTask ? 'show-add-task' : '']"
         />
         <DisplayTasks
             :selectedDate="selectedDate"
             :todaysTasks="todaysTasks"
             @cal-clicked="handleCalendarClick"
             @addtask-clicked="handleAddTaskClick"
+            @ask-delete-task="handlePopup"
             class="v-display-tasks"
+        />
+        <Popup
+            @yes-delete-task="handleDeleteYes"
+            @no-delete-task="handleDeleteNo"
+            :task="taskToDelete"
+            v-if="showPopup"
         />
     </div>
 </template>
@@ -22,34 +29,47 @@
 import Calendar from './components/Calendar';
 import DisplayTasks from './components/DisplayTasks';
 import AddTask from './components/AddTask';
+import Popup from './components/Popup';
 
 export default {
     components: {
         Calendar,
         DisplayTasks,
         AddTask,
+        Popup,
     },
     methods: {
-        addTodo(todo) {
+        addTask(task) {
             // finds todo obj if selected date already exists
             let foundToDo = this.getTodaysTasks();
             // adds onto that date obj if is there
             if (foundToDo) {
-                foundToDo = foundToDo.tasks.push(todo);
-                this.todos = [...this.todos, foundToDo];
+                foundToDo = foundToDo.tasks.push(task);
+                this.tasks = [...this.tasks, foundToDo];
                 // creates new date obj if nothing is found
             } else {
-                this.todos = [
-                    ...this.todos,
-                    { date: this.selectedDate, tasks: [todo] },
+                this.tasks = [
+                    ...this.tasks,
+                    { date: this.selectedDate, tasks: [task] },
                 ];
             }
+        },
+        deleteTask(deleteTask) {
+            let foundTodays = this.getTodaysTasks();
+            // gets index of task to remove
+            let updatedTodays = foundTodays.tasks.findIndex(
+                (task) => task.id == deleteTask
+            );
+            // finds todays tasks and then remove index found above
+            this.tasks
+                .find((toDoObj) => toDoObj.date === this.selectedDate)
+                .tasks.splice(updatedTodays, 1);
         },
         setSelectedDate(selectedDate) {
             this.selectedDate = selectedDate;
         },
         getTodaysTasks() {
-            return this.todos.find(
+            return this.tasks.find(
                 (toDoObj) => toDoObj.date === this.selectedDate
             );
         },
@@ -59,14 +79,29 @@ export default {
         handleAddTaskClick() {
             this.showAddTask = !this.showAddTask;
         },
+        handlePopup(task) {
+            this.taskToDelete = task;
+            this.showPopup = true;
+        },
+        handleDeleteYes(task) {
+            this.showPopup = false;
+            this.deleteTask(task.id);
+            this.taskToDelete = {};
+        },
+        handleDeleteNo() {
+            this.showPopup = false;
+            this.taskToDelete = {};
+        },
     },
     data() {
         return {
-            todos: [], //{date: String, tasks: Array}
+            tasks: [], //{date: String, tasks: Array}
             todaysTasks: [],
+            taskToDelete: {},
             selectedDate: '',
             showCalendar: false,
             showAddTask: false,
+            showPopup: false,
         };
     },
     watch: {
@@ -80,9 +115,14 @@ export default {
                 this.todaysTasks = [];
             }
         },
-        todos: function() {
+        tasks: function() {
             let todays = this.getTodaysTasks();
-            this.todaysTasks = todays.tasks;
+            // prevents error if last task of day is deleted
+            if (todays) {
+                this.todaysTasks = todays.tasks;
+            } else {
+                this.todaysTasks = [];
+            }
         },
     },
 };
@@ -144,13 +184,13 @@ select {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     grid-template-areas:
-        'todo calendar'
-        'todo addtodo';
+        'displaytasks calendar'
+        'displaytasks addtask';
 }
 
 .v-display-tasks {
     box-sizing: border-box;
-    grid-area: todo;
+    grid-area: displaytasks;
     border-right: 3px solid white;
     height: 100vh;
     background: #95f6d6;
@@ -163,9 +203,9 @@ select {
     background: #b7f7b7;
 }
 
-.v-addtodo {
+.v-addtask {
     box-sizing: border-box;
-    grid-area: addtodo;
+    grid-area: addtask;
     width: 100%;
     background: #d6f695;
 }
@@ -187,7 +227,7 @@ select {
         border-bottom: 3px solid white;
     }
 
-    .v-addtodo {
+    .v-addtask {
         display: none;
         border-bottom: 3px solid white;
     }

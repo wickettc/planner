@@ -1,6 +1,6 @@
 <template>
     <div class="add-task-container">
-        <form @submit.prevent="onSubmit">
+        <form @submit.prevent="onSubmit" autocomplete="off">
             <h3>Add Task</h3>
             <input
                 v-model="subject"
@@ -32,10 +32,10 @@
             </select>
             <div class="error time-err">{{ timeErr }}</div>
             <textarea
-                v-model="notes"
+                v-model="details"
                 rows="6"
-                name="notes"
-                placeholder="Any notes?"
+                name="details"
+                placeholder="Any details?"
             ></textarea>
             <button>Add Task</button>
         </form>
@@ -53,7 +53,7 @@ export default {
             subject: '',
             importance: '',
             time: '',
-            notes: '',
+            details: '',
             subErr: '',
             impErr: '',
             timeErr: '',
@@ -71,7 +71,7 @@ export default {
     methods: {
         onSubmit() {
             if (!this.subject) {
-                this.subErr = 'Please Add a To-do';
+                this.subErr = 'Please Add a Task';
             } else {
                 this.subErr = '';
             }
@@ -86,21 +86,21 @@ export default {
                 this.timeErr = '';
             }
             if (!this.subErr && !this.impErr && !this.timeErr) {
-                const newTodo = {
+                const newTask = {
                     id: uniqid(),
                     subject: this.subject,
                     importance: this.importance,
                     time: this.time,
-                    notes: this.notes,
+                    details: this.details,
                 };
                 this.subject = '';
                 this.importance = '';
                 this.time = '';
-                this.notes = '';
+                this.details = '';
                 this.subErr = '';
                 this.impErr = '';
                 this.timeErr = '';
-                this.$emit('add-todo', newTodo);
+                this.$emit('add-task', newTask);
             }
         },
     },
@@ -145,10 +145,6 @@ select {
     text-align-last: center;
     -moz-text-align-last: center;
 }
-
-/* select option[value=''] {
-    color: gray;
-} */
 
 select option[value='very-important'] {
     background: red;
