@@ -220,7 +220,6 @@ select {
     }
 
     .v-display-tasks {
-        border-bottom: 3px solid white;
         border-right: none;
         width: 100%;
     }
