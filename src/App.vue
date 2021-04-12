@@ -193,21 +193,23 @@ select {
     grid-area: displaytasks;
     border-right: 3px solid white;
     height: 100vh;
-    background: #95f6d6;
+    width: 50vw;
+    background: #a7f8dd;
 }
 
 .v-calendar {
     box-sizing: border-box;
     grid-area: calendar;
     border-bottom: 3px solid white;
-    background: #b7f7b7;
+    width: 50vw;
+    background: #c3f8c3;
 }
 
 .v-addtask {
     box-sizing: border-box;
     grid-area: addtask;
-    width: 100%;
-    background: #d6f695;
+    width: 50vw;
+    background: #ddf8a7;
 }
 
 @media only screen and (max-width: 767px) {
@@ -220,16 +222,19 @@ select {
     .v-display-tasks {
         border-bottom: 3px solid white;
         border-right: none;
+        width: 100%;
     }
 
     .v-calendar {
         display: none;
         border-bottom: 3px solid white;
+        width: 100%;
     }
 
     .v-addtask {
         display: none;
         border-bottom: 3px solid white;
+        width: 100%;
     }
 
     .show-add-task {

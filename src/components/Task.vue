@@ -29,6 +29,7 @@
             </div>
         </div>
         <div v-if="showDetails" :class="['task-detail', task.importance]">
+            <h5>Details</h5>
             {{ task.details }}
             <div v-if="!task.details">Sorry, no details</div>
         </div>
@@ -55,7 +56,7 @@ export default {
     margin-bottom: 5px;
     color: black;
     border: 1px solid gray;
-    background: #30f2f2;
+    background: #97f7d7;
 }
 
 .task {
@@ -95,6 +96,13 @@ export default {
     padding: 5px 10px;
 }
 
+.task-detail h5 {
+    font-style: italic;
+    text-decoration: underline;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
 .very-important {
     border-left: 15px solid red;
 }
@@ -107,15 +115,4 @@ export default {
     border-left: 15px solid yellow;
 }
 
-button {
-    background: #77f6f6;
-    border: 1px solid black;
-    transition: all 0.3s ease-in-out;
-    border-radius: 5%;
-}
-
-button:hover {
-    background: #30f2f2;
-    transform: scale(1.05);
-}
 </style>

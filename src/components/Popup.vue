@@ -23,6 +23,7 @@ export default {
     position: fixed;
     left: 50%;
     top: 50%;
+    max-width: 80%;
     transform: translate(-50%, -50%);
     border: 3px solid black;
     background-color: gray;
@@ -31,6 +32,10 @@ export default {
     flex-direction: column;
     text-align: center;
     color: black;
+}
+
+.popup h2 {
+    overflow-wrap: break-word;
 }
 
 .btns {

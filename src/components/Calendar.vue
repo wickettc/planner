@@ -185,7 +185,7 @@ export default {
     height: 15%;
     font-size: 1.5rem;
     border-bottom: 1px solid gray;
-    background: #91f291;
+    background: #a7f5a7;
 }
 
 .calendar-selectors select {
@@ -215,7 +215,7 @@ select {
 }
 
 .today {
-    background-color: #91f291;
+    background-color: #a7f5a7;
     color: black;
     box-sizing: border-box;
 }
@@ -233,7 +233,7 @@ td {
 
 select,
 .selcted-date-div {
-    background: #91f291;
+    background: #a7f5a7;
     border: 1px solid white;
     padding: 8px 10px;
     color: black;

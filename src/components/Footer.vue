@@ -48,9 +48,15 @@ footer {
 a {
     text-decoration: none;
     margin-left: 5px;
+    color: black;
+    transition: all 0.3s ease-in-out;
+}
+
+a:hover {
+    transform: scale(1.05);
 }
 
 .git-icon {
-    margin-left: 5px;
+    margin-left: 7px;
 }
 </style>

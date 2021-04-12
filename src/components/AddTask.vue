@@ -115,6 +115,7 @@ h3 {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-bottom: 5px;
 }
 
 .error {
@@ -134,7 +135,7 @@ textarea,
 select {
     padding: 8px 10px;
     text-align: center;
-    background: #c2f261;
+    background: #cdf57f;
     border: 1px solid white;
     font-size: 1.1rem;
     font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -159,7 +160,7 @@ select option[value='not-important'] {
 }
 
 button {
-    background: #c2f261;
+    background: #cdf57f;
     border: 1px solid white;
     border-radius: 5%;
     transition: all 0.3s ease-in-out;
